@@ -3,13 +3,16 @@ import firebase_admin
 from firebase_admin import credentials, db
 import pandas as pd
 import time
+import json
+
 
 # ---------------- CONFIG ----------------
 DATABASE_URL = "https://conductivity-monitor-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
 # ---------------- FIREBASE INIT ----------------
 if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
+cred_dict = json.loads(st.secrets["FIREBASE_KEY"])
+cred = credentials.Certificate(cred_dict)
     firebase_admin.initialize_app(cred, {
         'databaseURL': DATABASE_URL
     })
